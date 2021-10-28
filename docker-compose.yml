@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mysqlnew:
+    image: mysql:latest
+    ports:
+      - 3307:3306
+    container_name: mysqlnew
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=springibm
+      - MYSQL_PASSWORD=Password@123
+
+  main:
+    image: springbootmysqldocker
+    restart: on-failure
+    depends_on:
+      - mysqlnew
+    ports:
+      - 8090:8090
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/springibm?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true
